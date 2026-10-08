@@ -1,0 +1,556 @@
+index.html<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Campus Café</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #fff8f0;
+  color: #333;
+}
+
+header {
+  background: #6b3e26;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.login {
+  max-width: 400px;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px #ccc;
+  text-align: center;
+}
+
+.login input {
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+}
+
+button {
+  background: #6b3e26;
+  color: white;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #3e2418;
+}
+
+#error {
+  color: red;
+}
+
+#cafePage {
+  display: none;
+}
+
+.student {
+  background: #f4d7b5;
+  padding: 15px;
+  text-align: center;
+}
+
+.category {
+  text-align: center;
+  margin-top: 30px;
+  color: #6b3e26;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  padding: 20px;
+}
+
+.item {
+  background: white;
+  width: 210px;
+  padding: 18px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px #ccc;
+}
+
+.food {
+  font-size: 50px;
+}
+
+.item h3 {
+  color: #6b3e26;
+}
+
+.price {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.quantity {
+  width: 55px;
+  padding: 7px;
+  margin: 8px;
+}
+
+#cart {
+  max-width: 600px;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px #ccc;
+}
+
+#total {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#message {
+  color: green;
+  font-weight: bold;
+}
+
+footer {
+  background: #3e2418;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>☕ Campus Café</h1>
+  <p>Fresh Food • Snacks • Cool Drinks</p>
+</header>
+
+
+<!-- STUDENT LOGIN -->
+
+<div id="loginPage" class="login">
+
+  <h2>🎓 Student Login</h2>
+
+  <p>Enter your student details</p>
+
+  <input
+    type="text"
+    id="studentName"
+    placeholder="Student Name"
+  >
+
+  <input
+    type="text"
+    id="prn"
+    placeholder="PRN Number"
+  >
+
+  <button onclick="openCafe()">
+    🔓 Open Campus Café
+  </button>
+
+  <p id="error"></p>
+
+</div>
+
+
+<!-- CAFÉ PAGE -->
+
+<div id="cafePage">
+
+  <div class="student">
+    <h3>Welcome, <span id="displayName"></span> 👋</h3>
+    <p>PRN: <span id="displayPRN"></span></p>
+  </div>
+
+
+  <!-- SNACKS -->
+
+  <h2 class="category">🍿 Snacks</h2>
+
+  <div class="menu">
+
+    <div class="item">
+      <div class="food">🥟</div>
+      <h3>Samosa</h3>
+      <p class="price">₹20</p>
+      <input class="quantity" id="q1" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Samosa',20,'q1')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍟</div>
+      <h3>French Fries</h3>
+      <p class="price">₹50</p>
+      <input class="quantity" id="q2" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('French Fries',50,'q2')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🥪</div>
+      <h3>Sandwich</h3>
+      <p class="price">₹50</p>
+      <input class="quantity" id="q3" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Sandwich',50,'q3')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍔</div>
+      <h3>Veg Burger</h3>
+      <p class="price">₹60</p>
+      <input class="quantity" id="q4" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Veg Burger',60,'q4')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍕</div>
+      <h3>Pizza</h3>
+      <p class="price">₹100</p>
+      <input class="quantity" id="q5" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Pizza',100,'q5')">Add Order</button>
+    </div>
+
+  </div>
+
+
+  <!-- COOL DRINKS -->
+
+  <h2 class="category">🥤 Cool Drinks</h2>
+
+  <div class="menu">
+
+    <div class="item">
+      <div class="food">🥤</div>
+      <h3>Cold Drink</h3>
+      <p class="price">₹40</p>
+      <input class="quantity" id="q6" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Cold Drink',40,'q6')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍋</div>
+      <h3>Lemon Juice</h3>
+      <p class="price">₹30</p>
+      <input class="quantity" id="q7" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Lemon Juice',30,'q7')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🧃</div>
+      <h3>Fruit Juice</h3>
+      <p class="price">₹40</p>
+      <input class="quantity" id="q8" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Fruit Juice',40,'q8')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🥭</div>
+      <h3>Mango Juice</h3>
+      <p class="price">₹50</p>
+      <input class="quantity" id="q9" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Mango Juice',50,'q9')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🥛</div>
+      <h3>Milkshake</h3>
+      <p class="price">₹60</p>
+      <input class="quantity" id="q10" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Milkshake',60,'q10')">Add Order</button>
+    </div>
+
+  </div>
+
+
+  <!-- MEALS -->
+
+  <h2 class="category">🍛 Meals</h2>
+
+  <div class="menu">
+
+    <div class="item">
+      <div class="food">🍚</div>
+      <h3>Fried Rice</h3>
+      <p class="price">₹80</p>
+      <input class="quantity" id="q11" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Fried Rice',80,'q11')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍜</div>
+      <h3>Noodles</h3>
+      <p class="price">₹70</p>
+      <input class="quantity" id="q12" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Noodles',70,'q12')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍗</div>
+      <h3>Chicken Biryani</h3>
+      <p class="price">₹120</p>
+      <input class="quantity" id="q13" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Chicken Biryani',120,'q13')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🥞</div>
+      <h3>Dosa</h3>
+      <p class="price">₹50</p>
+      <input class="quantity" id="q14" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Dosa',50,'q14')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍛</div>
+      <h3>Idli</h3>
+      <p class="price">₹40</p>
+      <input class="quantity" id="q15" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Idli',40,'q15')">Add Order</button>
+    </div>
+
+  </div>
+
+
+  <!-- HOT DRINKS -->
+
+  <h2 class="category">☕ Hot Drinks</h2>
+
+  <div class="menu">
+
+    <div class="item">
+      <div class="food">☕</div>
+      <h3>Coffee</h3>
+      <p class="price">₹30</p>
+      <input class="quantity" id="q16" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Coffee',30,'q16')">Add Order</button>
+    </div>
+
+    <div class="item">
+      <div class="food">🍵</div>
+      <h3>Tea</h3>
+      <p class="price">₹20</p>
+      <input class="quantity" id="q17" type="number" value="1" min="1">
+      <br>
+      <button onclick="addItem('Tea',20,'q17')">Add Order</button>
+    </div>
+
+  </div>
+
+
+  <!-- CART -->
+
+  <div id="cart">
+
+    <h2>🛒 Your Order</h2>
+
+    <div id="cartItems">
+      No items added.
+    </div>
+
+    <hr>
+
+    <p id="total">Total: ₹0</p>
+
+    <button onclick="placeOrder()">
+      ✅ Place Order
+    </button>
+
+    <button onclick="logout()">
+      🔒 Logout
+    </button>
+
+    <p id="message"></p>
+
+  </div>
+
+</div>
+
+
+<footer>
+  <p>© 2026 Campus Café</p>
+</footer>
+
+
+<script>
+
+const correctPRN = "250105231212";
+
+let cart = [];
+let total = 0;
+
+
+/* STUDENT LOGIN */
+
+function openCafe() {
+
+  let name =
+    document.getElementById("studentName").value.trim();
+
+  let prn =
+    document.getElementById("prn").value.trim();
+
+  if (name === "") {
+    document.getElementById("error").innerHTML =
+      "❌ Please enter student name.";
+    return;
+  }
+
+  if (prn !== correctPRN) {
+    document.getElementById("error").innerHTML =
+      "❌ Incorrect PRN number.";
+    return;
+  }
+
+  document.getElementById("displayName").innerHTML = name;
+  document.getElementById("displayPRN").innerHTML = prn;
+
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("cafePage").style.display = "block";
+
+  window.scrollTo(0, 0);
+}
+
+
+/* ADD ITEM */
+
+function addItem(name, price, id) {
+
+  let quantity =
+    parseInt(document.getElementById(id).value);
+
+  if (quantity < 1) {
+    quantity = 1;
+  }
+
+  let itemTotal = price * quantity;
+
+  cart.push({
+    name: name,
+    quantity: quantity,
+    total: itemTotal
+  });
+
+  total += itemTotal;
+
+  showCart();
+}
+
+
+/* SHOW CART */
+
+function showCart() {
+
+  let output = "";
+
+  cart.forEach(function(item, index) {
+
+    output +=
+      "<p>" +
+      (index + 1) +
+      ". " +
+      item.name +
+      " × " +
+      item.quantity +
+      " = ₹" +
+      item.total +
+      "</p>";
+
+  });
+
+  document.getElementById("cartItems").innerHTML = output;
+
+  document.getElementById("total").innerHTML =
+    "Total: ₹" + total;
+}
+
+
+/* PLACE ORDER */
+
+function placeOrder() {
+
+  if (cart.length === 0) {
+
+    document.getElementById("message").innerHTML =
+      "❌ Please select an item first.";
+
+    return;
+  }
+
+  document.getElementById("message").innerHTML =
+    "✅ Order placed successfully! Total: ₹" + total;
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+  document.getElementById("cafePage").style.display = "none";
+
+  document.getElementById("loginPage").style.display = "block";
+
+  document.getElementById("studentName").value = "";
+  document.getElementById("prn").value = "";
+
+  cart = [];
+  total = 0;
+
+  document.getElementById("cartItems").innerHTML =
+    "No items added.";
+
+  document.getElementById("total").innerHTML =
+    "Total: ₹0";
+
+  document.getElementById("message").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>
